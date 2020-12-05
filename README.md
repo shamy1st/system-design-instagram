@@ -1,2 +1,2 @@
-# system-design-instagram
-Instagram Design
+# Instagram Design
+

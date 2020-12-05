@@ -35,9 +35,32 @@ Difficulty Level: Medium
 
 ## 2. Design Considerations
 
+The system would be read-heavy, so we will focus on building a system that can retrieve photos quickly.
 
+1. Practically, users can upload as many photos as they like. Efficient management of storage should be a crucial factor while designing this system.
+2. Low latency is expected while viewing photos.
+3. Data should be 100% reliable. If a user uploads a photo, the system will guarantee that it will never be lost.
 
 ## 3. Estimation
+
+ * Let’s assume we have 1000M total users, with 500M daily active users.
+ * 95M new photos per day, 1100 new photos per second.
+ * Average photo file size => 200KB
+ * Total space required for 1 day of photos: 95M * 200KB ~ 19TB
+ * Total space required for 10 years: 19TB * 365 * 10 ~ 70PB
+
+## 4. High-level Design
+
+![](https://github.com/shamy1st/system-design-instagram/blob/main/instagram-hld.png)
+
+ * At a high-level, we need to support two scenarios, one to upload photos and the other to view/search photos.
+ * Our service would need some object storage servers to store photos and also some database servers to store metadata information about the photos.
+
+## 5. Database Model
+
+
+
+
 
 
 

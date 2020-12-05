@@ -51,14 +51,17 @@ The system would be read-heavy, so we will focus on building a system that can r
 
 ## 4. High-level Design
 
-![](https://github.com/shamy1st/system-design-instagram/blob/main/instagram-hld.png)
-
  * At a high-level, we need to support two scenarios, one to upload photos and the other to view/search photos.
  * Our service would need some object storage servers to store photos and also some database servers to store metadata information about the photos.
 
+![](https://github.com/shamy1st/system-design-instagram/blob/main/instagram-hld.png)
+
 ## 5. Database Model
 
+![](https://github.com/shamy1st/system-design-instagram/blob/main/instagram-database-model.png)
 
+
+## 6. System Interface
 
 
 

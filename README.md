@@ -104,9 +104,16 @@ Memory for cache     | -- GB
 
 ## 6. System APIs
 
+
+
 ## 7. Low-level Design
+
+
 
 ## 8. Bottlenecks
 
+
+
 ## 9. Security and Permissions
+
 

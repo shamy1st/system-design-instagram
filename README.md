@@ -60,6 +60,16 @@ The system would be read-heavy, so we will focus on building a system that can r
 
 ![](https://github.com/shamy1st/system-design-instagram/blob/main/instagram-database-model.png)
 
+* We need to have an index on (PhotoID, CreationDate) since we need to fetch recent photos first.
+* We can store photos in a distributed file storage like [HDFS](https://en.wikipedia.org/wiki/Apache_Hadoop) or [S3](https://en.wikipedia.org/wiki/Amazon_S3).
+* We can store the above schema in a distributed key-value store to enjoy the benefits offered by NoSQL. All the metadata related to photos can go to a table where the ‘key’ would be the ‘PhotoID’ and the ‘value’ would be an object containing PhotoLocation, UserLocation, CreationTimestamp, etc.
+* We need to store relationships between users and photos, to know who owns which photo.
+* We also need to store the list of people a user follows.
+* For both of these tables, we can use a wide-column datastore like [Cassandra](https://en.wikipedia.org/wiki/Apache_Cassandra).
+* For the ‘UserPhoto’ table, the ‘key’ would be ‘UserID’ and the ‘value’ would be the list of ‘PhotoIDs’ the user owns, stored in different columns.
+* We will have a similar scheme for the ‘UserFollow’ table.
+* Cassandra or key-value stores in general, always maintain a certain number of replicas to offer reliability.
+* Also, in such data stores, deletes don’t get applied instantly, data is retained for certain days (to support undeleting) before getting removed from the system permanently.
 
 ## 6. System Interface
 

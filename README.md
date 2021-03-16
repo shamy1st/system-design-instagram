@@ -70,6 +70,11 @@ The system would be read-heavy, so we will focus on building a system that can r
 * Total space required for 1 day of photos: 95M * 200KB ~ 19TB
 * Total space required for 10 years: 19TB * 365 * 10 ~ 70PB
 
+* Let’s estimate how much data will be going into each table and how much total storage we will need for 10 years.
+* User: Assuming each “int” and “dateTime” is four bytes, each row in the User’s table will be of 68 bytes:
+  * UserID (4 bytes) + Name (20 bytes) + Email (32 bytes) + DateOfBirth (4 bytes) + CreationDate (4 bytes) + LastLogin (4 bytes) = 68 bytes
+* 
+
 ### Bandwidth Estimates
 
 ### Memory Estimates

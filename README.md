@@ -60,12 +60,29 @@ The system would be read-heavy, so we will focus on building a system that can r
 
 ## 4. Estimation
 
+### Traffic Estimates
+
+### Storage Estimates
+
 * Let’s assume we have 1000M total users, with 500M daily active users.
 * 95M new photos per day, 1100 new photos per second.
 * Average photo file size => 200KB
 * Total space required for 1 day of photos: 95M * 200KB ~ 19TB
 * Total space required for 10 years: 19TB * 365 * 10 ~ 70PB
 
+### Bandwidth Estimates
+
+### Memory Estimates
+
+### High-level Estimates
+
+Metric               | Estimate
+---------------------|---------
+New Photos           | 1100/s
+Incoming data        | -- KB/s
+Outgoing data        | -- MB/s
+Storage for 10 years | 70 PB
+Memory for cache     | -- GB
 
 ## 5. High-level Design
 

@@ -71,9 +71,15 @@ The system would be read-heavy, so we will focus on building a system that can r
 * Total space required for 10 years: 19TB * 365 * 10 ~ 70PB
 
 * Let’s estimate how much data will be going into each table and how much total storage we will need for 10 years.
-* User: Assuming each “int” and “dateTime” is four bytes, each row in the User’s table will be of 68 bytes:
+* **User**: Assuming each “int” and “dateTime” is four bytes, each row in the User’s table will be of 68 bytes:
   * UserID (4 bytes) + Name (20 bytes) + Email (32 bytes) + DateOfBirth (4 bytes) + CreationDate (4 bytes) + LastLogin (4 bytes) = 68 bytes
-* 
+  * If we have 1000 million users, we will need 68GB of total storage: 1000 million * 68 ~= 68GB
+* **Photo**: Each row in Photo’s table will be of 284 bytes:
+  * PhotoID (4 bytes) + UserID (4 bytes) + PhotoPath (256 bytes) + PhotoLatitude (4 bytes) + PhotLongitude(4 bytes) + UserLatitude (4 bytes) + UserLongitude (4 bytes) + CreationDate (4 bytes) = 284 bytes
+  * If 95M new photos get uploaded every day, we will need 27GB of storage for one day: 95M * 284 bytes ~= 27GB per day
+  * For 10 years we will need 99TB of storage.
+* **UserFollow**: Each row in the UserFollow table will consist of 8 bytes. If we have 1000 million users and on average each user follows 500 users. We would need 4TB of storage for the UserFollow table: 1000 million users * 500 followers * 8 bytes ~= 4TB
+* **Total space** required for all tables for 10 years will be 103TB: 68GB + 99TB + 4TB ~= 103TB
 
 ### Bandwidth Estimates
 

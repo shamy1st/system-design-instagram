@@ -71,7 +71,7 @@ The system would be read-heavy, so we will focus on building a system that can r
 
 ![](https://github.com/shamy1st/system-design-instagram/blob/main/instagram-hld.png)
 
-## 6. System Interface
+## 6. System APIs
 
 ## 7. Low-level Design
 

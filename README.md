@@ -41,22 +41,7 @@ The system would be read-heavy, so we will focus on building a system that can r
 2. Low latency is expected while viewing photos.
 3. Data should be 100% reliable. If a user uploads a photo, the system will guarantee that it will never be lost.
 
-## 3. Estimation
-
- * Let’s assume we have 1000M total users, with 500M daily active users.
- * 95M new photos per day, 1100 new photos per second.
- * Average photo file size => 200KB
- * Total space required for 1 day of photos: 95M * 200KB ~ 19TB
- * Total space required for 10 years: 19TB * 365 * 10 ~ 70PB
-
-## 4. High-level Design
-
- * At a high-level, we need to support two scenarios, one to upload photos and the other to view/search photos.
- * Our service would need some object storage servers to store photos and also some database servers to store metadata information about the photos.
-
-![](https://github.com/shamy1st/system-design-instagram/blob/main/instagram-hld.png)
-
-## 5. Database Model
+## 3. Database Model
 
 ![](https://github.com/shamy1st/system-design-instagram/blob/main/instagram-database-model.png)
 
@@ -71,11 +56,26 @@ The system would be read-heavy, so we will focus on building a system that can r
 * Cassandra or key-value stores in general, always maintain a certain number of replicas to offer reliability.
 * Also, in such data stores, deletes don’t get applied instantly, data is retained for certain days (to support undeleting) before getting removed from the system permanently.
 
+## 4. Estimation
+
+ * Let’s assume we have 1000M total users, with 500M daily active users.
+ * 95M new photos per day, 1100 new photos per second.
+ * Average photo file size => 200KB
+ * Total space required for 1 day of photos: 95M * 200KB ~ 19TB
+ * Total space required for 10 years: 19TB * 365 * 10 ~ 70PB
+
+## 5. High-level Design
+
+ * At a high-level, we need to support two scenarios, one to upload photos and the other to view/search photos.
+ * Our service would need some object storage servers to store photos and also some database servers to store metadata information about the photos.
+
+![](https://github.com/shamy1st/system-design-instagram/blob/main/instagram-hld.png)
+
 ## 6. System Interface
 
+## 7. Low-level Design
 
+## 8. Bottlenecks
 
-
-
-
+## 9. Security and Permissions
 

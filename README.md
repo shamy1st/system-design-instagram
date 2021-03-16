@@ -29,7 +29,7 @@ Difficulty Level: Medium
  3. Consistency can take a hit (in the interest of availability), if a user doesn’t see a photo for a while; it should be fine.
  4. The system should be highly reliable; any uploaded photo or video should never be lost.
 
-### Not in Scope
+### Out of Scope Requirements
  * Adding tags to photos, searching photos on tags, commenting on photos, tagging users to photos, who to follow, etc.
 
 

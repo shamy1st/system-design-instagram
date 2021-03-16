@@ -110,9 +110,62 @@ Memory for cache     | -- GB
 
 ![](https://github.com/shamy1st/system-design-instagram/blob/main/lld.png)
 
+* Photo uploads (or writes) can be slow as they have to go to the disk, whereas reads will be faster, especially if they are being served from cache.
+* Uploading users can consume all the available connections, as uploading is a slow process.
+* This means that ‘reads’ cannot be served if the system gets busy with all the write requests.
+* We should keep in mind that web servers have a connection limit before designing our system.
+* If we assume that a web server can have a maximum of 500 connections at any time, then it can’t have more than 500 concurrent uploads or reads.
+* To handle this bottleneck we can split reads and writes into separate services.
+* We will have dedicated servers for reads and different servers for writes to ensure that uploads don’t hog the system.
+* Separating photos’ read and write requests will also allow us to scale and optimize each of these operations independently.
+
 ## 8. Bottlenecks
 
+### Reliability and Redundancy
 
+* Losing files is not an option for our service.
+* Therefore, we will store multiple copies of each file so that if one storage server dies we can retrieve the photo from the other copy present on a different storage server.
+* This same principle also applies to other components of the system.
+* If we want to have high availability of the system, we need to have multiple replicas of services running in the system, so that if a few services die down the system still remains available and running.
+* Redundancy removes the single point of failure in the system.
+* If only one instance of a service is required to run at any point, we can run a redundant secondary copy of the service that is not serving any traffic, but it can take control after the failover when primary has a problem.
+* Creating redundancy in a system can remove single points of failure and provide a backup or spare functionality if needed in a crisis. 
+* For example, if there are two instances of the same service running in production and one fails or degrades, the system can failover to the healthy copy.
+* Failover can happen automatically or require manual intervention.
+
+### Data Sharding
+
+#### a. Partitioning based on UserID
+
+* Let’s assume we shard based on the ‘UserID’ so that we can keep all photos of a user on the same shard.
+* If one DB shard is 1TB, we will need 103 shards to store 103TB of data.
+* Let’s assume for better performance and scalability we keep 110 shards.
+* So we’ll find the shard number by UserID % 110 and then store the data there. 
+* To uniquely identify any photo in our system, we can append shard number with each PhotoID.
+
+* How can we generate PhotoIDs? 
+  * Each DB shard can have its own auto-increment sequence for PhotoIDs and since we will append ShardID with each PhotoID, it will make it unique throughout our system.
+
+* What are the different issues with this partitioning scheme?
+  * How would we handle hot users? Several people follow such hot users and a lot of other people see any photo they upload.
+  * Some users will have a lot of photos compared to others, thus making a non-uniform distribution of storage.
+  * What if we cannot store all pictures of a user on one shard? If we distribute photos of a user onto multiple shards will it cause higher latencies?
+  * Storing all photos of a user on one shard can cause issues like unavailability of all of the user’s data if that shard is down or higher latency if it is serving high load etc.
+
+#### b. Partitioning based on PhotoID
+
+
+
+### Cache and Load balancing
+
+* Our service would need a massive-scale photo delivery system to serve the globally distributed users. 
+* Our service should push its content closer to the user using a large number of geographically distributed photo cache servers and use CDNs (for details see Caching).
+* We can introduce a cache for metadata servers to cache hot database rows. 
+* We can use Memcache to cache the data and Application servers before hitting database can quickly check if the cache has desired rows. 
+* Least Recently Used (LRU) can be a reasonable cache eviction policy for our system. 
+* Under this policy, we discard the least recently viewed row first.
+* How can we build more intelligent cache? If we go with 80-20 rule, i.e., 20% of daily read volume for photos is generating 80% of traffic which means that certain photos are so popular that the majority of people read them. 
+* This dictates that we can try caching 20% of daily read volume of photos and metadata.
 
 ## 9. Security and Permissions
 

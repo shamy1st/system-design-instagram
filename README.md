@@ -108,7 +108,7 @@ Memory for cache     | -- GB
 
 ## 7. Low-level Design
 
-
+![](https://github.com/shamy1st/system-design-instagram/blob/main/lld.png)
 
 ## 8. Bottlenecks
 
